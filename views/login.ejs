@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Belajar Middleware</title>
+    </head>
+    <body>
+        <% if (message.length > 0) { %>
+            <% message.forEach((msg) => { %>
+                <p><%= text.message %></p>
+            <% }) %>
+        <% } %>
+        <form action="/proses_login" method="post">
+            <label for="">Username : </label>
+            <input type="text" name="username"><br>
+            <label for="">Password : </label>
+            <input type="text" name="password"><br>
+            <input type="submit" value="Login">
+        </form>
+    </body>
+</html>
