@@ -3,10 +3,11 @@
         <title>Belajar Middleware</title>
     </head>
     <body>
-        <% if (message.length > 0) { %>
-            <% message.forEach((msg) => { %>
+        <% if (Array.isArray(message) && message.length > 0) { %>
+            <pre><%= JSON.stringify(message, null, 2) %></pre> <!-- Debugging -->
+            <% message.forEach((text) => { %>
                 <p><%= text.message %></p>
-            <% }) %>
+            <% }); %>  <!-- Harus ada tanda titik koma di sini -->            
         <% } %>
         <form action="/proses_login" method="post">
             <label for="">Username : </label>

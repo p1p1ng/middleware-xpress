@@ -12,6 +12,10 @@ app.set('view engine', 'ejs');
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+    res.render("index", { message: [{ message: "Login gagal" }] }); // Array berisi objek
+});
+
 require('./router')(app);
 
 http.listen(app.get('port'), () => {

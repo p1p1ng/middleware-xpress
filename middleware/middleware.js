@@ -10,21 +10,33 @@ exports.cekUsia = (req, res, next) => {
 }
 
 exports.carbon = (req, res, next) => {
-    let title = req.body.title;
-    req.params.title = title.upperCase();
+    let title = req.params.title; // Ambil title dari URL parameter
+
+    // Validasi jika title kosong
+    if (!title) {
+        return res.status(400).send("Title tidak boleh kosong");
+    }
+
+    // Ubah title menjadi huruf besar
+    req.upperTitle = title.toUpperCase();
+
     next();
-}
+};
 
 exports.validasi_user = (req, res, next) => {
-    let schema = Joi.object().keys({
-        username: Joi.string().required().max(4),
-        password: Joi.string().min(7)
-    })
-    Joi.validate(req.body, schema)
-        .then(() => {
-            next();
-        })
-        .catch(err => {
-            res.render('login', { error: err.details[0].message });
-        })
-}
+    // Definisi skema validasi
+    const schema = Joi.object({
+        username: Joi.string().max(4).required(), // Maksimal 4 karakter
+        password: Joi.string().min(7).required() // Minimal 7 karakter
+    });
+
+    // Validasi request body
+    const { error, value } = schema.validate(req.body);
+
+    if (error) {
+        return res.render("login", { message: error.details });
+    }
+
+    next(); // Lanjut ke middleware berikutnya jika validasi berhasil
+
+};
